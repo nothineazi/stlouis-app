@@ -1,1 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200"  role="img" aria-hidden="true" focusable="false"><rect width="200" height="200" fill="#E6EEEC"/><circle cx="100" cy="100" r="64" fill="none" stroke="#1F5B5E" stroke-width="10"/><circle cx="100" cy="100" r="34" fill="#C9A15B"/><circle cx="100" cy="100" r="86" fill="none" stroke="#2E7C80" stroke-width="3" opacity=".5"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img"><title>Illustration : ciseaux</title><circle cx="100" cy="100" r="100" fill="#101B3A"/><circle cx="100" cy="100" r="92" fill="none" stroke="#E9DDB8" stroke-width="3"/>
+<g transform="translate(100 100)" stroke="#F6EFE0" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none">
+  <circle cx="-40.800000000000004" cy="-24" r="15.600000000000001"/>
+  <circle cx="-40.800000000000004" cy="24" r="15.600000000000001"/>
+  <path d="M -28.799999999999997 -16.8 L 54 12"/>
+  <path d="M -28.799999999999997 16.8 L 54 -12"/>
+  <circle cx="2.4" cy="0" r="4.8999999999999995" fill="#F6EFE0"/>
+</g></svg>

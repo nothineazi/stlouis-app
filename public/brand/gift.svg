@@ -1,1 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 250" width="500" height="250"  role="img" aria-hidden="true" focusable="false"><defs><linearGradient id="g" gradientTransform="rotate(30 .5 .5)"><stop offset="0" stop-color="#1F5B5E"/><stop offset="1" stop-color="#14201F"/></linearGradient></defs><rect width="500" height="250" rx="22" fill="url(#g)"/><rect x="14" y="14" width="472" height="222" rx="14" fill="none" stroke="#C9A15B" stroke-opacity=".6"/><rect x="228" y="0" width="44" height="250" fill="#C9A15B" opacity=".85"/><rect x="0" y="103" width="500" height="44" fill="#C9A15B" opacity=".85"/><circle cx="250" cy="125" r="30" fill="#E3C98F"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 250" width="500" height="250" role="img"><title>Illustration : carte cadeau à bandes de barbier</title><rect width="500" height="250" rx="22" fill="#F6EFE0"/>
+<defs><pattern id="g1" width="48" height="48" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)"><rect width="48" height="48" fill="#F6EFE0"/><rect width="16" height="48" fill="#C0392B"/><rect x="32" width="16" height="48" fill="#3B6FD9"/></pattern></defs>
+<rect x="0" y="0" width="500" height="26" fill="url(#g1)"/><rect x="0" y="224" width="500" height="26" fill="url(#g1)"/>
+<rect x="30" y="56" width="440" height="138" rx="14" fill="#101B3A"/>
+
+<g transform="translate(250 125)" stroke="#E9DDB8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none">
+  <circle cx="-51.00000000000001" cy="-30" r="19.5"/>
+  <circle cx="-51.00000000000001" cy="30" r="19.5"/>
+  <path d="M -36 -21.000000000000004 L 67.5 15"/>
+  <path d="M -36 21.000000000000004 L 67.5 -15"/>
+  <circle cx="3" cy="0" r="4.8999999999999995" fill="#E9DDB8"/>
+</g></svg>

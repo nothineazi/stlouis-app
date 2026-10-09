@@ -15,15 +15,12 @@ export const sansFont = localFont({
   adjustFontFallback: "Arial",
 });
 
-/** Affichage : wordmark et titres. Serif éditoriale du site public, aussi utilisée pour les titres d'écran du back-office. */
+/** Affichage : wordmark et titres. Oswald variable (condensée, enseigne de barbier), graisses 200-700, mise en capitales par `effects.css`. */
 export const displayFont = localFont({
-  src: [
-    { path: "../fonts/cormorant-garamond/cormorant-garamond-latin-500-normal.woff2", weight: "500", style: "normal" },
-    { path: "../fonts/cormorant-garamond/cormorant-garamond-latin-600-normal.woff2", weight: "600", style: "normal" },
-  ],
+  src: [{ path: "../fonts/oswald/oswald-latin-wght-normal.woff2", weight: "200 700", style: "normal" }],
   variable: "--font-face-display",
   display: "swap",
-  adjustFontFallback: "Times New Roman",
+  adjustFontFallback: "Arial",
 });
 
 /** Références et code : jamais préchargée (utilisée dans le back-office seulement), téléchargée à la première utilisation. */

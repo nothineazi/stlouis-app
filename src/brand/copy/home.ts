@@ -1,37 +1,37 @@
 import type { HomeContent } from "@/core/types";
 
 /**
- * Textes et visuels de l'accueil d'OVAGLOW (marque FICTIVE). Les images sont des illustrations SVG générées
- * (`npm run assets:generate`), servies depuis `public/brand/`. Un dépôt client remplace ce fichier.
+ * Textes et visuels de l'accueil de St Louis (barbershop). Tout le contenu est FICTIF en attendant les informations du client ; les images sont des
+ * illustrations SVG générées (`node src/brand/generate-assets.mjs`), sans visage, servies depuis `public/brand/`.
  */
 export const homeCopy: HomeContent = {
-  heroKicker: "Marque fictive de démonstration",
-  heroTitle: "Bienvenue chez OVAGLOW",
+  heroKicker: "Barbershop",
+  heroTitle: "Bienvenue chez St Louis",
   heroImages: [
-    { src: "/brand/hero-1.svg", width: 1290, height: 610, alt: "Illustration abstraite : galets empilés et feuillage" },
-    { src: "/brand/hero-2.svg", width: 1290, height: 610, alt: "Illustration abstraite : vagues et soleil levant" },
+    { src: "/brand/hero-1.svg", width: 1290, height: 610, alt: "Illustration : poteau de barbier, ciseaux et peigne" },
+    { src: "/brand/hero-2.svg", width: 1290, height: 610, alt: "Illustration : rasoir, ciseaux et poteau de barbier" },
   ],
   about: {
-    title: "Prendre soin de soi",
-    text: "Soins du visage et du corps, mains et pieds, coiffure et barbier : un parcours de réservation clair, pensé pour le mobile. Tous les sites, soins, prix et personnes présentés ici sont fictifs.",
-    image: { src: "/brand/about.svg", width: 500, height: 477, alt: "Illustration abstraite : arches et feuilles" },
+    title: "L'art du barbier",
+    text: "Coupes, dégradés, barbe et rasage à la serviette chaude : choisissez votre barbier et réservez votre fauteuil en quelques instants, depuis votre téléphone. Services, prix et barbiers présentés ici sont fictifs.",
+    image: { src: "/brand/about.svg", width: 500, height: 477, alt: "Illustration : miroir, poteau de barbier et outils" },
   },
   featured: [
-    { title: "Rituel Lagune", description: "Un soin du corps enveloppant, entre gommage et détente." },
-    { title: "Soin Lumière", description: "Un soin du visage pour un teint frais et éclatant." },
-    { title: "Massage Détente", description: "Un moment de calme pour relâcher les tensions." },
-    { title: "Rasage serviette chaude", description: "Le rituel du barbier, à l'ancienne." },
+    { title: "Dégradé", description: "Un dégradé net, du plus court au plus progressif, fini aux contours.", icon: "scissors" },
+    { title: "Rasage serviette chaude", description: "Le rituel du barbier, à l'ancienne : serviette chaude, mousse, lame droite.", icon: "flame" },
+    { title: "Barbe + soin à l'huile", description: "Taille, forme et soin à l'huile pour une barbe nette et souple.", icon: "crown" },
+    { title: "Coupe enfant", description: "Une coupe soignée pour les plus jeunes, en moins de 12 ans.", icon: "sparkles" },
   ],
   process: [
-    { title: "Diagnostic" },
-    { title: "Soins", image: { src: "/brand/process-2.svg", width: 200, height: 200, alt: "Illustration abstraite : cercles" } },
-    { title: "Conseils & suivi", image: { src: "/brand/process-3.svg", width: 200, height: 200, alt: "Illustration abstraite : feuilles" } },
+    { title: "Conseil" },
+    { title: "Coupe", image: { src: "/brand/process-2.svg", width: 200, height: 200, alt: "Illustration : ciseaux" } },
+    { title: "Finitions", image: { src: "/brand/process-3.svg", width: 200, height: 200, alt: "Illustration : rasoir" } },
   ],
   gift: {
     title: "Cartes cadeaux",
-    text: "Simulation d'une carte cadeau : choisissez un montant fictif et prévisualisez la carte.",
-    image: { src: "/brand/gift.svg", width: 500, height: 250, alt: "Illustration abstraite : carte et ruban" },
-    amounts: [10000, 20000, 40000, 60000, 100000],
+    text: "Offrez une coupe ou un rasage. Simulation d'une carte cadeau : choisissez un montant fictif et prévisualisez la carte.",
+    image: { src: "/brand/gift.svg", width: 500, height: 250, alt: "Illustration : carte cadeau à bandes de barbier" },
+    amounts: [5000, 10000, 15000, 25000, 50000],
   },
   decorImage: { src: "/brand/decor.svg", width: 193, height: 158 },
 };

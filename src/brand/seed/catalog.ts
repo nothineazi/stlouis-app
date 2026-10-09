@@ -1,26 +1,21 @@
 import type { Practitioner, Room, SeedBooking, Service, Site } from "@/core/types";
 
 /**
- * Données de la marque OVAGLOW (marque FICTIVE de la souche).
+ * Données de St Louis (barbershop).
  *
- * TOUT est FICTIF : sites, soins, prix, praticiens, salles, réservations. Aucune adresse, aucun numéro, aucune personne réelle.
+ * TOUT est FICTIF : site, adresse, services, prix, durées, barbiers, postes, clients, réservations. Aucune donnée réelle n'a été fournie par le client.
  * Chaque entrée de personne ou de lieu porte `fictive: true` (badge « FICTIF » dans l'UI).
- * Un dépôt client remplace ce dossier (`src/brand/seed/`) par ses données ; la souche n'est jamais déployée.
  */
 
 // ---------------------------------------------------------------------------
-// Sites (FICTIFS)
+// Site (FICTIF)
 // ---------------------------------------------------------------------------
 
-/** FICTIF : acompte forfaitaire de démonstration, en FCFA, configurable par site. */
-const FICTIVE_DEPOSIT_FCFA = 5000;
-
-const ADDRESS_FICTIVE = "Adresse fictive";
+/** FICTIF : acompte forfaitaire de démonstration, en FCFA. */
+const FICTIVE_DEPOSIT_FCFA = 2000;
 
 export const seedSites: Site[] = [
-  { id: "site-aurore", name: "Site Aurore", city: "Ville fictive", address: ADDRESS_FICTIVE, depositAmount: FICTIVE_DEPOSIT_FCFA },
-  { id: "site-brise", name: "Site Brise", city: "Ville fictive", address: ADDRESS_FICTIVE, depositAmount: FICTIVE_DEPOSIT_FCFA },
-  { id: "site-cedre", name: "Site Cèdre", city: "Ville fictive", address: ADDRESS_FICTIVE, depositAmount: FICTIVE_DEPOSIT_FCFA },
+  { id: "stl-salon", name: "St Louis Barbershop", city: "Ville fictive", address: "Adresse fictive", depositAmount: FICTIVE_DEPOSIT_FCFA },
 ];
 
 // ---------------------------------------------------------------------------
@@ -29,29 +24,29 @@ export const seedSites: Site[] = [
 
 const CATALOG = [
   {
-    key: "vi",
-    category: "Soins du visage",
-    services: [["Soin Lumière", 18000], ["Soin Pureté", 20000], ["Gommage doux", 12000], ["Masque Hydra", 15000]],
+    key: "cp",
+    category: "Coupe",
+    services: [["Coupe classique", 3000], ["Dégradé", 4000], ["Dégradé + contours", 5000], ["Coupe ciseaux", 5000]],
+  },
+  {
+    key: "bb",
+    category: "Barbe & rasage",
+    services: [["Taille de barbe", 2500], ["Rasage serviette chaude", 4000], ["Barbe + soin à l'huile", 4500], ["Liseré et contours", 2000]],
+  },
+  {
+    key: "en",
+    category: "Enfant",
+    services: [["Coupe enfant (moins de 12 ans)", 2500], ["Dégradé enfant", 3000]],
+  },
+  {
+    key: "sv",
+    category: "Soin du visage",
+    services: [["Soin visage express", 5000], ["Gommage et masque", 7000], ["Épilation nez et oreilles", 1500]],
   },
   {
     key: "co",
-    category: "Soins du corps",
-    services: [["Massage Détente", 25000], ["Gommage Sable", 18000], ["Rituel Lagune", 35000], ["Enveloppement Argile", 22000]],
-  },
-  {
-    key: "mp",
-    category: "Mains et pieds",
-    services: [["Manucure express", 8000], ["Manucure complète", 12000], ["Pédicure complète", 15000], ["Pose de vernis", 5000]],
-  },
-  {
-    key: "cf",
-    category: "Coiffure",
-    services: [["Coupe et brushing", 15000], ["Soin capillaire Nutrition", 12000], ["Coiffure événement", 25000], ["Coloration", 30000]],
-  },
-  {
-    key: "ba",
-    category: "Barbier",
-    services: [["Coupe homme", 5000], ["Dégradé", 6000], ["Taille de barbe", 4000], ["Rasage serviette chaude", 8000]],
+    category: "Coloration",
+    services: [["Coloration cheveux", 8000], ["Coloration barbe", 6000], ["Décoloration et mèches", 12000]],
   },
 ] as const;
 
@@ -77,131 +72,97 @@ export const seedServices: Service[] = CATALOG.flatMap((c) =>
 const idsOf = (key: CatKey) => CATALOG.find((c) => c.key === key)!.services.map(([n]) => sid(key, n));
 
 // ---------------------------------------------------------------------------
-// Praticiens et salles par site (FICTIFS)
+// Barbiers et postes (FICTIFS)
 // ---------------------------------------------------------------------------
 
-type RoleKey = "face" | "body" | "nails" | "hair" | "barber";
+const SITE_ID = seedSites[0].id;
 
-const ROLES: Record<RoleKey, { role: string; serviceIds: string[] }> = {
-  face: { role: "Esthéticienne", serviceIds: idsOf("vi") },
-  body: { role: "Spa-thérapeute", serviceIds: idsOf("co") },
-  nails: { role: "Prothésiste ongulaire", serviceIds: idsOf("mp") },
-  hair: { role: "Coiffeur·se", serviceIds: idsOf("cf") },
-  barber: { role: "Barbier", serviceIds: idsOf("ba") },
-};
-const ROLE_ORDER: RoleKey[] = ["face", "body", "nails", "hair", "barber"];
+/** Noms inventés (FICTIF) : prénom et initiale. */
+const BARBERS: { name: string; role: string; serviceIds: string[] }[] = [
+  { name: "Marc A.", role: "Barbier", serviceIds: [...idsOf("cp"), ...idsOf("en")] },
+  { name: "Joël K.", role: "Barbier senior", serviceIds: [...idsOf("cp"), ...idsOf("bb"), ...idsOf("en")] },
+  { name: "Samuel T.", role: "Spécialiste barbe et rasage", serviceIds: [...idsOf("bb"), ...idsOf("cp").slice(0, 2)] },
+  { name: "Éric N.", role: "Coloriste et soin du visage", serviceIds: [...idsOf("sv"), ...idsOf("co")] },
+];
 
-// Noms inventés (FICTIF), un par rôle et par site.
-const STAFF_NAMES: Record<string, string[]> = {
-  "site-aurore": ["Inès M.", "Lucas B.", "Sana K.", "Maëlle D.", "Karim T."],
-  "site-brise": ["Awa S.", "Théo R.", "Nadia L.", "Eliot P.", "Moussa C."],
-  "site-cedre": ["Léa F.", "Hugo N.", "Yasmine O.", "Chloé V.", "Samir A."],
-};
-
-export const seedPractitioners: Practitioner[] = seedSites.flatMap((site) =>
-  ROLE_ORDER.map((role, i): Practitioner => ({
-    id: `${site.id}-p${i + 1}`,
-    siteId: site.id,
-    name: STAFF_NAMES[site.id][i],
-    role: ROLES[role].role,
-    serviceIds: ROLES[role].serviceIds,
-    active: true,
-    fictive: true,
-  })),
-);
+export const seedPractitioners: Practitioner[] = BARBERS.map((b, i): Practitioner => ({
+  id: `${SITE_ID}-p${i + 1}`,
+  siteId: SITE_ID,
+  name: b.name,
+  role: b.role,
+  serviceIds: b.serviceIds,
+  active: true,
+  fictive: true,
+}));
 
 const ROOM_DEFS = [
-  { key: "visage", name: "Cabine visage", description: "Soins du visage.", categories: ["Soins du visage"] },
-  { key: "corps", name: "Cabine corps", description: "Massages, gommages et rituels.", categories: ["Soins du corps"] },
-  { key: "mains", name: "Espace mains & pieds", description: "Postes de manucure et de pédicure.", categories: ["Mains et pieds"] },
-  { key: "coiffure", name: "Salon de coiffure", description: "Espace coiffure avec bacs de lavage.", categories: ["Coiffure"] },
-  { key: "barbier", name: "Espace barbier", description: "Fauteuils de barbier.", categories: ["Barbier"] },
+  { key: "poste1", name: "Poste 1", description: "Fauteuil de barbier : coupes, barbe et enfants.", categories: ["Coupe", "Barbe & rasage", "Enfant"] },
+  { key: "poste2", name: "Poste 2", description: "Fauteuil de barbier : coupes, barbe et enfants.", categories: ["Coupe", "Barbe & rasage", "Enfant"] },
+  { key: "poste3", name: "Poste 3", description: "Fauteuil de barbier : coupes et rasage.", categories: ["Coupe", "Barbe & rasage"] },
+  { key: "soin", name: "Espace soin et couleur", description: "Soins du visage et colorations.", categories: ["Soin du visage", "Coloration"] },
 ] as const;
 
-export const seedRooms: Room[] = seedSites.flatMap((site) =>
-  ROOM_DEFS.map((r): Room => ({
-    id: `${site.id}-r-${r.key}`,
-    siteId: site.id,
-    name: r.name,
-    description: r.description,
-    categories: [...r.categories],
-    active: true,
-    fictive: true,
-  })),
-);
+export const seedRooms: Room[] = ROOM_DEFS.map((r): Room => ({
+  id: `${SITE_ID}-r-${r.key}`,
+  siteId: SITE_ID,
+  name: r.name,
+  description: r.description,
+  categories: [...r.categories],
+  active: true,
+  fictive: true,
+}));
 
 // ---------------------------------------------------------------------------
-// Réservations seed par site (FICTIF : clients, horaires, statuts d'acompte)
+// Réservations seed (FICTIF : clients, horaires, statuts d'acompte)
 // ---------------------------------------------------------------------------
 
 /** [jour (0 = lundi de la semaine en cours), heure, clé catégorie, nom du service, acompte reçu] */
 type SeedRow = [number, string, CatKey, string, boolean];
 
-// Créneaux de 60 min (durée par défaut FICTIVE). Horaires FICTIFS : lun–ven 9h–19h, sam 9h–18h, dim 10h–16h.
-const SEED_ROWS: Record<string, SeedRow[]> = {
-  "site-aurore": [
-    [0, "09:30", "vi", "Soin Lumière", true],
-    [0, "11:00", "mp", "Manucure complète", true],
-    [1, "10:00", "ba", "Dégradé", true],
-    [1, "14:00", "co", "Rituel Lagune", false],
-    [2, "15:30", "cf", "Coupe et brushing", false],
-    [3, "09:00", "co", "Massage Détente", true],
-    [4, "16:00", "mp", "Pédicure complète", false],
-    [5, "11:00", "vi", "Masque Hydra", true],
-    [6, "11:00", "ba", "Taille de barbe", false],
-  ],
-  "site-brise": [
-    [0, "10:00", "ba", "Coupe homme", true],
-    [1, "09:30", "vi", "Soin Pureté", true],
-    [1, "13:00", "co", "Gommage Sable", false],
-    [2, "11:30", "mp", "Pose de vernis", true],
-    [3, "14:30", "cf", "Soin capillaire Nutrition", true],
-    [4, "10:00", "ba", "Rasage serviette chaude", false],
-    [5, "12:00", "co", "Enveloppement Argile", true],
-    [6, "13:00", "vi", "Gommage doux", false],
-  ],
-  "site-cedre": [
-    [0, "09:00", "co", "Massage Détente", true],
-    [0, "12:00", "vi", "Soin Lumière", false],
-    [1, "10:30", "cf", "Coloration", true],
-    [2, "14:00", "mp", "Manucure express", true],
-    [3, "09:30", "ba", "Dégradé", true],
-    [3, "16:00", "cf", "Coiffure événement", false],
-    [4, "11:00", "mp", "Pédicure complète", true],
-    [5, "13:00", "co", "Rituel Lagune", false],
-    [6, "12:00", "ba", "Coupe homme", true],
-  ],
-};
+// Créneaux de 60 min (durée par défaut FICTIVE). Horaires FICTIFS : tous les jours 9h – 20h.
+const SEED_ROWS: SeedRow[] = [
+  [0, "09:30", "cp", "Dégradé", true],
+  [0, "11:00", "bb", "Taille de barbe", true],
+  [0, "15:00", "cp", "Coupe classique", false],
+  [1, "10:00", "bb", "Rasage serviette chaude", true],
+  [1, "12:00", "en", "Coupe enfant (moins de 12 ans)", true],
+  [1, "16:30", "sv", "Soin visage express", false],
+  [2, "09:00", "cp", "Dégradé + contours", true],
+  [2, "14:00", "co", "Coloration barbe", false],
+  [3, "11:30", "bb", "Barbe + soin à l'huile", true],
+  [3, "17:00", "cp", "Coupe ciseaux", true],
+  [4, "10:00", "cp", "Dégradé", false],
+  [4, "13:30", "bb", "Liseré et contours", true],
+  [4, "18:00", "co", "Coloration cheveux", true],
+  [5, "10:30", "en", "Dégradé enfant", true],
+  [5, "12:00", "cp", "Coupe classique", false],
+  [5, "15:30", "sv", "Gommage et masque", true],
+  [6, "11:00", "bb", "Taille de barbe", false],
+  [6, "14:00", "cp", "Dégradé", true],
+];
 
 // Noms inventés (FICTIF).
 const CUSTOMERS = [
-  "Alice Dupré", "Bruno Tessier", "Camille Rivière", "Dora Mensah", "Émile Vasseur", "Fanny Colombe",
-  "Gaël Marchetti", "Hélène Aubry", "Ibrahim Lefort", "Jade Moreau", "Kévin Barrault", "Lina Chevalier",
-  "Mathis Perrin", "Noémie Gauthier", "Omar Benali", "Pauline Roussel", "Quentin Lacroix", "Rita Fontaine",
-  "Sofia Navarro", "Tom Delmas", "Ursule Pichon", "Victor Hamel", "Wendy Lambert", "Xavier Costa",
-  "Yanis Morel", "Zoé Brunet", "Adèle Fabre", "Basile Carré",
+  "Alain Mbarga", "Brice Tchoumi", "Cédric Fotso", "Didier Ngassa", "Éric Essomba", "Fabrice Kamga",
+  "Gilles Biyick", "Hervé Nkoulou", "Igor Ewane", "Jules Dongmo", "Kevin Manga", "Landry Tagne",
+  "Michel Pouth", "Nestor Mekou", "Olivier Abena", "Patrick Njoh", "Quentin Etoundi", "Roger Kouam",
+  "Serge Wouembe", "Thierry Ndjock", "Urbain Fouda", "Valère Tchamba", "William Bella", "Yvan Lekane",
 ];
 
-let customerIdx = 0;
-export const seedBookings: SeedBooking[] = seedSites.flatMap((site) => {
-  const siteRooms = seedRooms.filter((r) => r.siteId === site.id);
-  const sitePractitioners = seedPractitioners.filter((p) => p.siteId === site.id);
-  return SEED_ROWS[site.id].map(([dayOffset, start, key, name, depositReceived], i): SeedBooking => {
-    const serviceId = sid(key, name);
-    const category = CATALOG.find((c) => c.key === key)!.category;
-    const n = customerIdx++;
-    return {
-      id: `b-${site.id}-${i + 1}`,
-      siteId: site.id,
-      serviceId,
-      practitionerId: sitePractitioners.find((p) => p.serviceIds.includes(serviceId))!.id,
-      roomId: siteRooms.find((r) => r.categories.includes(category))!.id,
-      dayOffset,
-      start,
-      customerName: CUSTOMERS[n % CUSTOMERS.length],
-      // Numéros fictifs : plage de test, jamais joignables.
-      customerPhone: `+237 600 00 00 ${String(n + 1).padStart(2, "0")}`,
-      depositReceived,
-    };
-  });
+export const seedBookings: SeedBooking[] = SEED_ROWS.map(([dayOffset, start, key, name, depositReceived], i): SeedBooking => {
+  const serviceId = sid(key, name);
+  const category = CATALOG.find((c) => c.key === key)!.category;
+  return {
+    id: `b-${SITE_ID}-${i + 1}`,
+    siteId: SITE_ID,
+    serviceId,
+    practitionerId: seedPractitioners.find((p) => p.serviceIds.includes(serviceId))!.id,
+    roomId: seedRooms.find((r) => r.categories.includes(category))!.id,
+    dayOffset,
+    start,
+    customerName: CUSTOMERS[i % CUSTOMERS.length],
+    // Numéros fictifs : plage de test, jamais joignables.
+    customerPhone: `+237 600 00 00 ${String(i + 1).padStart(2, "0")}`,
+    depositReceived,
+  };
 });

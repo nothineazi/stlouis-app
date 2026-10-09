@@ -3,6 +3,9 @@
  * Tailwind 4 range ses classes dans des couches CSS : tout ce qui est ici est dans une couche, sinon une règle hors couche
  * l'emporterait sur les classes utilitaires (ex. `tracking-*`, `focus-visible:outline-*`).
  * Les couleurs restent celles du thème (variables --background, --primary…) : aucun jeton n'est modifié.
+ *
+ * St Louis : titres en capitales (police d'enseigne Oswald) et motif poteau de barbier (bandes rouge / crème / bleu) en filet décoratif
+ * sous l'en-tête et au-dessus du pied de page. Les bandes ne portent aucun texte.
  */
 
 @layer base {
@@ -21,7 +24,29 @@
 @layer components {
   .font-display {
     font-feature-settings: "liga", "kern";
-    letter-spacing: 0.005em;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* Motif poteau de barbier : filet de 6 px sous l'en-tête (site public et en-tête mobile du back-office), 8 px sur le pied de page. */
+  header.sticky::after,
+  footer#contact::before {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    background: repeating-linear-gradient(-45deg, var(--pole-red) 0 10px, var(--pole-cream) 10px 20px, var(--pole-blue) 20px 30px, var(--pole-cream) 30px 40px);
+    pointer-events: none;
+  }
+  header.sticky::after {
+    bottom: -1px;
+    height: 6px;
+  }
+  footer#contact {
+    position: relative;
+  }
+  footer#contact::before {
+    top: 0;
+    height: 8px;
   }
 
   .lux-fade-up { animation: lux-fade-up 0.5s var(--ease-lux) both; }

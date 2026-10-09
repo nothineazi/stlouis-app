@@ -10,12 +10,12 @@ import { seedPractitioners, seedRooms, seedBookings, seedServices, seedSites } f
 const NOTES = [
   "Préfère les rendez-vous en fin de matinée.",
   "Peau sensible : éviter les produits parfumés.",
-  "Aime la température du hammam plutôt douce.",
-  "Vient souvent accompagnée de sa fille.",
+  "Demande toujours le même barbier.",
+  "Vient souvent avec son fils.",
   "",
-  "Allergie au latex : le signaler au praticien.",
+  "Allergie connue à signaler avant un soin du visage ou une coloration.",
   "",
-  "Souhaite être rappelée la veille par WhatsApp.",
+  "Souhaite être rappelé la veille par WhatsApp.",
 ];
 
 const HISTORY_TIMES = ["09:00", "10:30", "12:00", "14:00", "15:30", "17:00"];
